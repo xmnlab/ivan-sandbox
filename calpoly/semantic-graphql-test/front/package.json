@@ -1,0 +1,50 @@
+{
+  "name": "semantic-graphql-front",
+  "version": "0.1.0",
+  "description": "Semantic Graphql for schema.org",
+  "license": "BSD-3-Clause",
+  "author": "CalPoly-Quansight",
+  "files": [
+    "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
+    "style/**/*.{css,eot,gif,html,jpg,json,png,svg,woff2,ttf}"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf lib",
+    "precommit": "lint-staged",
+    "prepare": "npm run clean && npm run build",
+    "test": "cd test && ./run-tests.sh",
+    "prettier": "prettier --write '**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}'",
+    "start": "node lib/index.js",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "apollo-boost": "^0.3.1",
+    "apollo-cache-inmemory": "^1.5.1",
+    "apollo-client": "^2.5.1",
+    "apollo-link": "^1.2.11",
+    "apollo-link-error": "^1.1.10",
+    "apollo-link-http": "^1.5.14",
+    "graphql": "^14.2.0",
+    "graphql-tag": "^2.10.1",
+    "node-fetch": "^2.3.0"
+  },
+  "devDependencies": {
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.0",
+    "prettier": "^1.13.7",
+    "rimraf": "^2.6.3",
+    "typescript": "~3.1.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "lint-staged": {
+    "**/*{.ts,.tsx,.css,.json,.md}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}

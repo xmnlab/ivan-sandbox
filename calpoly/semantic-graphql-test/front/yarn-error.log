@@ -1,0 +1,72 @@
+Arguments: 
+  /mnt/sda1/storage/miniconda/envs/semantic-graphql/bin/node /mnt/sda1/storage/miniconda/envs/semantic-graphql/bin/yarn.js start
+
+PATH: 
+  /mnt/sda1/storage/miniconda/envs/semantic-graphql/bin:/mnt/sda1/storage/miniconda/condabin:/mnt/sda1/storage/miniconda/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin
+
+Yarn version: 
+  1.15.2
+
+Node version: 
+  11.11.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  SyntaxError: /mnt/sda1/dev/quansight/calpoly-project/semantic-graphql-test/front/package.json: Unexpected end of JSON input
+      at JSON.parse (<anonymous>)
+      at /mnt/sda1/storage/miniconda/envs/semantic-graphql/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/mnt/sda1/storage/miniconda/envs/semantic-graphql/lib/cli.js:304:30)
+      at /mnt/sda1/storage/miniconda/envs/semantic-graphql/lib/cli.js:315:13
+
+npm manifest: 
+  {                                                                                                                                                                                           
+    "name": "semantic-graphql-front",                                                                                                                                                    
+    "version": "0.1.0",                                                                                                                                                                       
+    "description": "Semantic Graphql for schema.org",                                                                                                                             
+    "license": "BSD-3-Clause",
+    "author": "CalPoly-Quansight",
+    "files": [
+      "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
+      "style/**/*.{css,eot,gif,html,jpg,json,png,svg,woff2,ttf}"
+    ],
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
+    "scripts": {
+      "build": "tsc",
+      "clean": "rimraf lib",
+      "precommit": "lint-staged",
+      "prepare": "npm run clean && npm run build",
+      "test": "cd test && ./run-tests.sh",
+      "prettier": "prettier --write '**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}'",
+      "watch": "tsc -w"
+    },
+    "dependencies": {
+      "apollo-boost": "^0.1.26",
+      "graphql": "^14.1.1",
+      "graphql-tag": "^2.10.1"
+    ,
+    "devDependencies": {
+      "husky": "^0.14.3",
+      "lint-staged": "^7.2.0",
+      "prettier": "^1.13.7",
+      "typescript": "~3.1.1"
+    },
+    "publishConfig": {
+      "access": "public"
+    },
+    "lint-staged": {
+      "**/*{.ts,.tsx,.css,.json,.md}": [
+        "prettier --write",
+        "git add"
+      ]
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

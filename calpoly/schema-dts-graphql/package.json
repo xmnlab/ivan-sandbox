@@ -1,0 +1,47 @@
+{
+  "name": "schema-dts-graphql",
+  "version": "0.1.0",
+  "description": "",
+  "files": [
+    "lib/**/*.{d.ts,eot,gif,html,jpg,js,js.map,json,png,svg,woff2,ttf}",
+    "style/**/*.{css,eot,gif,html,jpg,json,png,svg,woff2,ttf}"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf lib",
+    "start": "node lib/index.js",
+    "precommit": "lint-staged",
+    "prepare": "npm run clean && npm run build",
+    "test": "cd test && ./run-tests.sh",
+    "prettier": "prettier --write '**/*{.ts,.tsx,.js,.jsx,.css,.json,.md}'",
+    "watch": "tsc -w"
+  },
+  "author": "Quansight",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "nodemon": "^1.18.4",
+    "schema-dts": "0.3.1",
+    "graphql": "14.2.0"
+  },
+  "devDependencies": {
+    "husky": "^0.14.3",
+    "lint-staged": "^7.2.0",
+    "prettier": "^1.13.7",
+    "rimraf": "~2.6.2",
+    "typescript": "^3.3.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "jupyterlab": {
+    "extension": true
+  },
+  "lint-staged": {
+    "**/*{.ts,.tsx,.css,.json,.md}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
