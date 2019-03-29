@@ -1,0 +1,766 @@
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+type Query {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  dataset: Source_DatasetClass
+  person: Source_rNews
+}
+
+"""The class of RDF Lists."""
+type RdfList implements RdfListInterface & RdfsResourceInterface & Node {
+  """The ID of an object"""
+  id: ID!
+
+  """The first item in the subject RDF list."""
+  first: [RdfsResource]
+
+  """The rest of the subject RDF list after the first item."""
+  rest: [RdfList]
+
+  """The subject is an instance of a class."""
+  type: [RdfsClass]
+
+  """
+  An additional type for the item, typically used for adding more specific types
+  from external vocabularies in microdata syntax. This is a relationship between
+  something and a class that the thing is in. In RDFa syntax, it is better to
+  use the native RDFa syntax - the 'typeof' attribute - for multiple types.
+  Schema.org tools may have only weaker understanding of extra types, in
+  particular those defined externally.
+  """
+  additionalType: [RdfsClass]
+
+  """Idiomatic property used for structured values."""
+  value: [RdfsResource]
+
+  """A description of the subject resource."""
+  comment: [String]
+
+  """A human-readable name for the subject."""
+  label: [String]
+
+  """Further information about the subject resource."""
+  seeAlso: [RdfsResource]
+
+  """The defininition of the subject resource."""
+  isDefinedBy: [RdfsResource]
+
+  """A member of the subject resource."""
+  member: [RdfsResource]
+
+  """
+  The property that determines the predicate of an annotated axiom or annotated annotation.
+  """
+  annotatedProperty: [RdfsResource]
+
+  """
+  The property that determines the subject of an annotated axiom or annotated annotation.
+  """
+  annotatedSource: [RdfsResource]
+
+  """
+  The property that determines the object of an annotated axiom or annotated annotation.
+  """
+  annotatedTarget: [RdfsResource]
+
+  """
+  The annotation property that indicates that a given entity has been deprecated.
+  """
+  deprecated: [RdfsResource]
+
+  """
+  The property that determines the collection of members in either a
+  owl:AllDifferent, owl:AllDisjointClasses or owl:AllDisjointProperties axiom.
+  """
+  members: [RdfList]
+
+  """
+  The annotation property that provides version information for an ontology or another OWL construct.
+  """
+  versionInfo: [RdfsResource]
+}
+
+"""Interface for http://www.w3.org/1999/02/22-rdf-syntax-ns#List"""
+interface RdfListInterface {
+  """The ID of an object"""
+  id: ID!
+
+  """The first item in the subject RDF list."""
+  first: [RdfsResource]
+
+  """The rest of the subject RDF list after the first item."""
+  rest: [RdfList]
+
+  """The subject is an instance of a class."""
+  type: [RdfsClass]
+
+  """
+  An additional type for the item, typically used for adding more specific types
+  from external vocabularies in microdata syntax. This is a relationship between
+  something and a class that the thing is in. In RDFa syntax, it is better to
+  use the native RDFa syntax - the 'typeof' attribute - for multiple types.
+  Schema.org tools may have only weaker understanding of extra types, in
+  particular those defined externally.
+  """
+  additionalType: [RdfsClass]
+
+  """Idiomatic property used for structured values."""
+  value: [RdfsResource]
+
+  """A description of the subject resource."""
+  comment: [String]
+
+  """A human-readable name for the subject."""
+  label: [String]
+
+  """Further information about the subject resource."""
+  seeAlso: [RdfsResource]
+
+  """The defininition of the subject resource."""
+  isDefinedBy: [RdfsResource]
+
+  """A member of the subject resource."""
+  member: [RdfsResource]
+
+  """
+  The property that determines the predicate of an annotated axiom or annotated annotation.
+  """
+  annotatedProperty: [RdfsResource]
+
+  """
+  The property that determines the subject of an annotated axiom or annotated annotation.
+  """
+  annotatedSource: [RdfsResource]
+
+  """
+  The property that determines the object of an annotated axiom or annotated annotation.
+  """
+  annotatedTarget: [RdfsResource]
+
+  """
+  The annotation property that indicates that a given entity has been deprecated.
+  """
+  deprecated: [RdfsResource]
+
+  """
+  The property that determines the collection of members in either a
+  owl:AllDifferent, owl:AllDisjointClasses or owl:AllDisjointProperties axiom.
+  """
+  members: [RdfList]
+
+  """
+  The annotation property that provides version information for an ontology or another OWL construct.
+  """
+  versionInfo: [RdfsResource]
+}
+
+"""The class of classes."""
+type RdfsClass implements RdfsClassInterface & RdfsResourceInterface & Node {
+  """The ID of an object"""
+  id: ID!
+
+  """The subject is a subclass of a class."""
+  subClassOf: [RdfsClass]
+
+  """
+  The property that determines that two given classes are equivalent, and that is used to specify datatype definitions.
+  """
+  equivalentClass: [RdfsClass]
+
+  """
+  The property that determines the collection of classes or data ranges that build an intersection.
+  """
+  intersectionOf: [RdfList]
+
+  """
+  The property that determines the collection of individuals or data values that build an enumeration.
+  """
+  oneOf: [RdfList]
+
+  """
+  The property that determines the collection of classes or data ranges that build a union.
+  """
+  unionOf: [RdfList]
+
+  """The subject is an instance of a class."""
+  type: [RdfsClass]
+
+  """
+  An additional type for the item, typically used for adding more specific types
+  from external vocabularies in microdata syntax. This is a relationship between
+  something and a class that the thing is in. In RDFa syntax, it is better to
+  use the native RDFa syntax - the 'typeof' attribute - for multiple types.
+  Schema.org tools may have only weaker understanding of extra types, in
+  particular those defined externally.
+  """
+  additionalType: [RdfsClass]
+
+  """Idiomatic property used for structured values."""
+  value: [RdfsResource]
+
+  """A description of the subject resource."""
+  comment: [String]
+
+  """A human-readable name for the subject."""
+  label: [String]
+
+  """Further information about the subject resource."""
+  seeAlso: [RdfsResource]
+
+  """The defininition of the subject resource."""
+  isDefinedBy: [RdfsResource]
+
+  """A member of the subject resource."""
+  member: [RdfsResource]
+
+  """
+  The property that determines the predicate of an annotated axiom or annotated annotation.
+  """
+  annotatedProperty: [RdfsResource]
+
+  """
+  The property that determines the subject of an annotated axiom or annotated annotation.
+  """
+  annotatedSource: [RdfsResource]
+
+  """
+  The property that determines the object of an annotated axiom or annotated annotation.
+  """
+  annotatedTarget: [RdfsResource]
+
+  """
+  The annotation property that indicates that a given entity has been deprecated.
+  """
+  deprecated: [RdfsResource]
+
+  """
+  The property that determines the collection of members in either a
+  owl:AllDifferent, owl:AllDisjointClasses or owl:AllDisjointProperties axiom.
+  """
+  members: [RdfList]
+
+  """
+  The annotation property that provides version information for an ontology or another OWL construct.
+  """
+  versionInfo: [RdfsResource]
+}
+
+"""Interface for http://www.w3.org/2000/01/rdf-schema#Class"""
+interface RdfsClassInterface {
+  """The ID of an object"""
+  id: ID!
+
+  """The subject is a subclass of a class."""
+  subClassOf: [RdfsClass]
+
+  """
+  The property that determines that two given classes are equivalent, and that is used to specify datatype definitions.
+  """
+  equivalentClass: [RdfsClass]
+
+  """
+  The property that determines the collection of classes or data ranges that build an intersection.
+  """
+  intersectionOf: [RdfList]
+
+  """
+  The property that determines the collection of individuals or data values that build an enumeration.
+  """
+  oneOf: [RdfList]
+
+  """
+  The property that determines the collection of classes or data ranges that build a union.
+  """
+  unionOf: [RdfList]
+
+  """The subject is an instance of a class."""
+  type: [RdfsClass]
+
+  """
+  An additional type for the item, typically used for adding more specific types
+  from external vocabularies in microdata syntax. This is a relationship between
+  something and a class that the thing is in. In RDFa syntax, it is better to
+  use the native RDFa syntax - the 'typeof' attribute - for multiple types.
+  Schema.org tools may have only weaker understanding of extra types, in
+  particular those defined externally.
+  """
+  additionalType: [RdfsClass]
+
+  """Idiomatic property used for structured values."""
+  value: [RdfsResource]
+
+  """A description of the subject resource."""
+  comment: [String]
+
+  """A human-readable name for the subject."""
+  label: [String]
+
+  """Further information about the subject resource."""
+  seeAlso: [RdfsResource]
+
+  """The defininition of the subject resource."""
+  isDefinedBy: [RdfsResource]
+
+  """A member of the subject resource."""
+  member: [RdfsResource]
+
+  """
+  The property that determines the predicate of an annotated axiom or annotated annotation.
+  """
+  annotatedProperty: [RdfsResource]
+
+  """
+  The property that determines the subject of an annotated axiom or annotated annotation.
+  """
+  annotatedSource: [RdfsResource]
+
+  """
+  The property that determines the object of an annotated axiom or annotated annotation.
+  """
+  annotatedTarget: [RdfsResource]
+
+  """
+  The annotation property that indicates that a given entity has been deprecated.
+  """
+  deprecated: [RdfsResource]
+
+  """
+  The property that determines the collection of members in either a
+  owl:AllDifferent, owl:AllDisjointClasses or owl:AllDisjointProperties axiom.
+  """
+  members: [RdfList]
+
+  """
+  The annotation property that provides version information for an ontology or another OWL construct.
+  """
+  versionInfo: [RdfsResource]
+}
+
+"""The class resource, everything."""
+type RdfsResource implements RdfsResourceInterface & Node {
+  """The ID of an object"""
+  id: ID!
+
+  """The subject is an instance of a class."""
+  type: [RdfsClass]
+
+  """
+  An additional type for the item, typically used for adding more specific types
+  from external vocabularies in microdata syntax. This is a relationship between
+  something and a class that the thing is in. In RDFa syntax, it is better to
+  use the native RDFa syntax - the 'typeof' attribute - for multiple types.
+  Schema.org tools may have only weaker understanding of extra types, in
+  particular those defined externally.
+  """
+  additionalType: [RdfsClass]
+
+  """Idiomatic property used for structured values."""
+  value: [RdfsResource]
+
+  """A description of the subject resource."""
+  comment: [String]
+
+  """A human-readable name for the subject."""
+  label: [String]
+
+  """Further information about the subject resource."""
+  seeAlso: [RdfsResource]
+
+  """The defininition of the subject resource."""
+  isDefinedBy: [RdfsResource]
+
+  """A member of the subject resource."""
+  member: [RdfsResource]
+
+  """
+  The property that determines the predicate of an annotated axiom or annotated annotation.
+  """
+  annotatedProperty: [RdfsResource]
+
+  """
+  The property that determines the subject of an annotated axiom or annotated annotation.
+  """
+  annotatedSource: [RdfsResource]
+
+  """
+  The property that determines the object of an annotated axiom or annotated annotation.
+  """
+  annotatedTarget: [RdfsResource]
+
+  """
+  The annotation property that indicates that a given entity has been deprecated.
+  """
+  deprecated: [RdfsResource]
+
+  """
+  The property that determines the collection of members in either a
+  owl:AllDifferent, owl:AllDisjointClasses or owl:AllDisjointProperties axiom.
+  """
+  members: [RdfList]
+
+  """
+  The annotation property that provides version information for an ontology or another OWL construct.
+  """
+  versionInfo: [RdfsResource]
+}
+
+"""Interface for http://www.w3.org/2000/01/rdf-schema#Resource"""
+interface RdfsResourceInterface {
+  """The ID of an object"""
+  id: ID!
+
+  """The subject is an instance of a class."""
+  type: [RdfsClass]
+
+  """
+  An additional type for the item, typically used for adding more specific types
+  from external vocabularies in microdata syntax. This is a relationship between
+  something and a class that the thing is in. In RDFa syntax, it is better to
+  use the native RDFa syntax - the 'typeof' attribute - for multiple types.
+  Schema.org tools may have only weaker understanding of extra types, in
+  particular those defined externally.
+  """
+  additionalType: [RdfsClass]
+
+  """Idiomatic property used for structured values."""
+  value: [RdfsResource]
+
+  """A description of the subject resource."""
+  comment: [String]
+
+  """A human-readable name for the subject."""
+  label: [String]
+
+  """Further information about the subject resource."""
+  seeAlso: [RdfsResource]
+
+  """The defininition of the subject resource."""
+  isDefinedBy: [RdfsResource]
+
+  """A member of the subject resource."""
+  member: [RdfsResource]
+
+  """
+  The property that determines the predicate of an annotated axiom or annotated annotation.
+  """
+  annotatedProperty: [RdfsResource]
+
+  """
+  The property that determines the subject of an annotated axiom or annotated annotation.
+  """
+  annotatedSource: [RdfsResource]
+
+  """
+  The property that determines the object of an annotated axiom or annotated annotation.
+  """
+  annotatedTarget: [RdfsResource]
+
+  """
+  The annotation property that indicates that a given entity has been deprecated.
+  """
+  deprecated: [RdfsResource]
+
+  """
+  The property that determines the collection of members in either a
+  owl:AllDifferent, owl:AllDisjointClasses or owl:AllDisjointProperties axiom.
+  """
+  members: [RdfList]
+
+  """
+  The annotation property that provides version information for an ontology or another OWL construct.
+  """
+  versionInfo: [RdfsResource]
+}
+
+"""
+DatasetClass - This class is based upon W3C DCAT work, and benefits from
+collaboration around the DCAT, ADMS and VoID vocabularies. See
+http://www.w3.org/wiki/WebSchemas/Datasets for full details and mappings.
+"""
+type Source_DatasetClass implements Source_DatasetClassInterface & RdfsResourceInterface & Node {
+  """The ID of an object"""
+  id: ID!
+
+  """The subject is an instance of a class."""
+  type: [RdfsClass]
+
+  """
+  An additional type for the item, typically used for adding more specific types
+  from external vocabularies in microdata syntax. This is a relationship between
+  something and a class that the thing is in. In RDFa syntax, it is better to
+  use the native RDFa syntax - the 'typeof' attribute - for multiple types.
+  Schema.org tools may have only weaker understanding of extra types, in
+  particular those defined externally.
+  """
+  additionalType: [RdfsClass]
+
+  """Idiomatic property used for structured values."""
+  value: [RdfsResource]
+
+  """A description of the subject resource."""
+  comment: [String]
+
+  """A human-readable name for the subject."""
+  label: [String]
+
+  """Further information about the subject resource."""
+  seeAlso: [RdfsResource]
+
+  """The defininition of the subject resource."""
+  isDefinedBy: [RdfsResource]
+
+  """A member of the subject resource."""
+  member: [RdfsResource]
+
+  """
+  The property that determines the predicate of an annotated axiom or annotated annotation.
+  """
+  annotatedProperty: [RdfsResource]
+
+  """
+  The property that determines the subject of an annotated axiom or annotated annotation.
+  """
+  annotatedSource: [RdfsResource]
+
+  """
+  The property that determines the object of an annotated axiom or annotated annotation.
+  """
+  annotatedTarget: [RdfsResource]
+
+  """
+  The annotation property that indicates that a given entity has been deprecated.
+  """
+  deprecated: [RdfsResource]
+
+  """
+  The property that determines the collection of members in either a
+  owl:AllDifferent, owl:AllDisjointClasses or owl:AllDisjointProperties axiom.
+  """
+  members: [RdfList]
+
+  """
+  The annotation property that provides version information for an ontology or another OWL construct.
+  """
+  versionInfo: [RdfsResource]
+}
+
+"""
+Interface for http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_DatasetClass
+"""
+interface Source_DatasetClassInterface {
+  """The ID of an object"""
+  id: ID!
+
+  """The subject is an instance of a class."""
+  type: [RdfsClass]
+
+  """
+  An additional type for the item, typically used for adding more specific types
+  from external vocabularies in microdata syntax. This is a relationship between
+  something and a class that the thing is in. In RDFa syntax, it is better to
+  use the native RDFa syntax - the 'typeof' attribute - for multiple types.
+  Schema.org tools may have only weaker understanding of extra types, in
+  particular those defined externally.
+  """
+  additionalType: [RdfsClass]
+
+  """Idiomatic property used for structured values."""
+  value: [RdfsResource]
+
+  """A description of the subject resource."""
+  comment: [String]
+
+  """A human-readable name for the subject."""
+  label: [String]
+
+  """Further information about the subject resource."""
+  seeAlso: [RdfsResource]
+
+  """The defininition of the subject resource."""
+  isDefinedBy: [RdfsResource]
+
+  """A member of the subject resource."""
+  member: [RdfsResource]
+
+  """
+  The property that determines the predicate of an annotated axiom or annotated annotation.
+  """
+  annotatedProperty: [RdfsResource]
+
+  """
+  The property that determines the subject of an annotated axiom or annotated annotation.
+  """
+  annotatedSource: [RdfsResource]
+
+  """
+  The property that determines the object of an annotated axiom or annotated annotation.
+  """
+  annotatedTarget: [RdfsResource]
+
+  """
+  The annotation property that indicates that a given entity has been deprecated.
+  """
+  deprecated: [RdfsResource]
+
+  """
+  The property that determines the collection of members in either a
+  owl:AllDifferent, owl:AllDisjointClasses or owl:AllDisjointProperties axiom.
+  """
+  members: [RdfList]
+
+  """
+  The annotation property that provides version information for an ontology or another OWL construct.
+  """
+  versionInfo: [RdfsResource]
+}
+
+"""
+rNews - This class contains derivatives of IPTC rNews properties. rNews is a
+data model of publishing metadata with serializations currently available for
+RDFa as well as HTML5 Microdata. More information about the IPTC and rNews can
+be found at <a href="http://rnews.org">rnews.org</a>.
+"""
+type Source_rNews implements Source_rNewsInterface & RdfsResourceInterface & Node {
+  """The ID of an object"""
+  id: ID!
+
+  """The subject is an instance of a class."""
+  type: [RdfsClass]
+
+  """
+  An additional type for the item, typically used for adding more specific types
+  from external vocabularies in microdata syntax. This is a relationship between
+  something and a class that the thing is in. In RDFa syntax, it is better to
+  use the native RDFa syntax - the 'typeof' attribute - for multiple types.
+  Schema.org tools may have only weaker understanding of extra types, in
+  particular those defined externally.
+  """
+  additionalType: [RdfsClass]
+
+  """Idiomatic property used for structured values."""
+  value: [RdfsResource]
+
+  """A description of the subject resource."""
+  comment: [String]
+
+  """A human-readable name for the subject."""
+  label: [String]
+
+  """Further information about the subject resource."""
+  seeAlso: [RdfsResource]
+
+  """The defininition of the subject resource."""
+  isDefinedBy: [RdfsResource]
+
+  """A member of the subject resource."""
+  member: [RdfsResource]
+
+  """
+  The property that determines the predicate of an annotated axiom or annotated annotation.
+  """
+  annotatedProperty: [RdfsResource]
+
+  """
+  The property that determines the subject of an annotated axiom or annotated annotation.
+  """
+  annotatedSource: [RdfsResource]
+
+  """
+  The property that determines the object of an annotated axiom or annotated annotation.
+  """
+  annotatedTarget: [RdfsResource]
+
+  """
+  The annotation property that indicates that a given entity has been deprecated.
+  """
+  deprecated: [RdfsResource]
+
+  """
+  The property that determines the collection of members in either a
+  owl:AllDifferent, owl:AllDisjointClasses or owl:AllDisjointProperties axiom.
+  """
+  members: [RdfList]
+
+  """
+  The annotation property that provides version information for an ontology or another OWL construct.
+  """
+  versionInfo: [RdfsResource]
+}
+
+"""
+Interface for http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_rNews
+"""
+interface Source_rNewsInterface {
+  """The ID of an object"""
+  id: ID!
+
+  """The subject is an instance of a class."""
+  type: [RdfsClass]
+
+  """
+  An additional type for the item, typically used for adding more specific types
+  from external vocabularies in microdata syntax. This is a relationship between
+  something and a class that the thing is in. In RDFa syntax, it is better to
+  use the native RDFa syntax - the 'typeof' attribute - for multiple types.
+  Schema.org tools may have only weaker understanding of extra types, in
+  particular those defined externally.
+  """
+  additionalType: [RdfsClass]
+
+  """Idiomatic property used for structured values."""
+  value: [RdfsResource]
+
+  """A description of the subject resource."""
+  comment: [String]
+
+  """A human-readable name for the subject."""
+  label: [String]
+
+  """Further information about the subject resource."""
+  seeAlso: [RdfsResource]
+
+  """The defininition of the subject resource."""
+  isDefinedBy: [RdfsResource]
+
+  """A member of the subject resource."""
+  member: [RdfsResource]
+
+  """
+  The property that determines the predicate of an annotated axiom or annotated annotation.
+  """
+  annotatedProperty: [RdfsResource]
+
+  """
+  The property that determines the subject of an annotated axiom or annotated annotation.
+  """
+  annotatedSource: [RdfsResource]
+
+  """
+  The property that determines the object of an annotated axiom or annotated annotation.
+  """
+  annotatedTarget: [RdfsResource]
+
+  """
+  The annotation property that indicates that a given entity has been deprecated.
+  """
+  deprecated: [RdfsResource]
+
+  """
+  The property that determines the collection of members in either a
+  owl:AllDifferent, owl:AllDisjointClasses or owl:AllDisjointProperties axiom.
+  """
+  members: [RdfList]
+
+  """
+  The annotation property that provides version information for an ontology or another OWL construct.
+  """
+  versionInfo: [RdfsResource]
+}

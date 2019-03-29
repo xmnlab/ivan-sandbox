@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { GraphQLSchema, GraphQLObjectType } = require('graphql');
+const { GraphQLSchema, GraphQLObjectType, printSchema } = require('graphql');
 
 // Apply custom fields before anything else
 require('./customFields');
@@ -16,12 +16,20 @@ fs.readdirSync(mutationDir).forEach(fileName => {
 });
 
 // Build schema
-module.exports = new GraphQLSchema({
+const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
     name: 'Query',
     fields: {
       // Relay's favorite
       node: _.nodeField,
+      dataset: {
+        type: _.getObjectType('http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_DatasetClass'),
+        resolve: () => ({}),
+      },
+      person: {
+        type: _.getObjectType('http://www.w3.org/wiki/WebSchemas/SchemaDotOrgSources#source_rNews'),
+        resolve: () => ({}),
+      },
       // Helpers for common app resources
       // Viewer's data entry point
       /*
@@ -36,3 +44,8 @@ module.exports = new GraphQLSchema({
   }),*/
 });
 
+module.exports = schema;
+
+// Save schema in Schema language to disk
+fs.writeFileSync(path.join(__dirname, '../lib/schema.graphql'), printSchema(schema));
+console.log('Schema saved on disk');
