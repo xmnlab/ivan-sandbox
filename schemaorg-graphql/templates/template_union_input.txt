@@ -1,0 +1,72 @@
+// see: https://github.com/Cardinal90/graphql-union-input-type/issues/9
+
+const {
+  GraphQLObjectType,
+  GraphQLList,
+  GraphQLString,
+  GraphQLBoolean,
+  GraphQLInt,
+  GraphQLFloat,
+  GraphQLInputObjectType
+} = require('graphql');
+
+const { makeExecutableSchema } = require('apollo-server');
+const UnionInputType = require('graphql-union-input-type');
+let schema;
+
+/* input types definition */
+{% for input_type, fields in type_defs %}
+const {{ input_type }}Input = new GraphQLInputObjectType({
+  name: '{{ input_type }}Input',
+  fields: () => ({
+{% for field_name, field_types, field_description in fields %} {% 
+  if field_name == 'identifier' 
+%}   {{ field_name }}: { type: {{ field_types|safe }} },{%
+  else
+%}   {{ field_name }}: { type: GraphQLList({{ field_types|safe }}) },{% endif %}{#  // {{ field_description }}#}
+{% endfor %}
+  })
+});
+{% endfor %}
+/* union type for input types definition */
+{% for input_type, input_deps in input_types %}
+const {{ input_type }}Input = UnionInputType({
+  name: '{{ input_type }}Input',
+  inputTypes: [
+    {% for dep in input_deps %}{{ dep }}Input,
+    {% endfor %}
+  ],
+});
+{% endfor %}
+/* AnyInput definition */
+const AnyInput = UnionInputType({
+  name: 'AnyInput',
+  inputTypes: [
+    {% for input_type, fields in type_defs %}{{ input_type }}Input, 
+    {% endfor %}
+  ],
+  resolveType(name) {
+    // The important part: return the type from the schema from its name (e.g. "FirstInputType")
+    // console.log(schema.getTypeMap());
+    return schema.getTypeMap()[name + 'Input'];
+  },
+  typeKey: '__typename'
+});
+
+/* resolvers */
+resolvers = { AnyInput };
+
+/* typeDefs */
+const typeDefs = `
+scalar AnyInput
+{% for input_type, fields in type_defs %}scalar {{ input_type }}Input
+{% endfor %}
+`;
+
+schema = makeExecutableSchema({ typeDefs, resolvers });
+
+module.exports = { 
+  AnyInput,
+{% for typename, fields in type_defs %}  {{ typename }}Input,
+{% endfor %}
+};
