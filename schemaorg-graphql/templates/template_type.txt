@@ -8,11 +8,16 @@ const {
   GraphQLUnionType
 } = require('graphql');
 
-{% for typename, fields in type_defs %}
+const { 
+{% for enum_name, enum_def in enum_defs.items() %}  {{ enum_def['rdfs:label'] }}Enum, 
+{% endfor %}
+} = require('./schemaorg-enum');
+
+{% for typename, fields in type_defs.items() %}
 const {{ typename }} = new GraphQLObjectType({
   name: '{{ typename }}',
   fields: () => ({
-{% for field_name, field_types in fields %}
+{% for field_name, field_types in fields.items() %}
     {% 
       if field_name == 'identifier' 
     %}{{ field_name }}: { type: {{ field_types|safe }} },{%
@@ -23,7 +28,7 @@ const {{ typename }} = new GraphQLObjectType({
 });
 {% endfor %}
 
-{% for typename, join_types in union_types %}
+{% for typename, join_types in union_types.items() %}
 const {{ typename }} = new GraphQLUnionType({
   name: '{{ typename }}',
   types: [].concat(
@@ -37,6 +42,6 @@ const {{ typename }} = new GraphQLUnionType({
 {% endfor %}
 
 module.exports = {
-  {% for typename, fields in type_defs %}{{ typename }},
+  {% for typename, fields in type_defs.items() %}{{ typename }},
   {% endfor %}
 };

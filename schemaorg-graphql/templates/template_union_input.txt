@@ -1,7 +1,5 @@
 // see: https://github.com/Cardinal90/graphql-union-input-type/issues/9
-
 const {
-  GraphQLObjectType,
   GraphQLList,
   GraphQLString,
   GraphQLBoolean,
@@ -12,24 +10,30 @@ const {
 
 const { makeExecutableSchema } = require('apollo-server');
 const UnionInputType = require('graphql-union-input-type');
+
+const { 
+{% for enum_name, enum_def in enum_defs.items() %}  {{ enum_def['rdfs:label'] }}Enum, 
+{% endfor %}
+} = require('./schemaorg-enum');
+
 let schema;
 
 /* input types definition */
-{% for input_type, fields in type_defs %}
+{% for input_type, fields in type_defs.items() %}
 const {{ input_type }}Input = new GraphQLInputObjectType({
   name: '{{ input_type }}Input',
   fields: () => ({
-{% for field_name, field_types, field_description in fields %} {% 
+{% for field_name, field_types in fields.items() %} {% 
   if field_name == 'identifier' 
 %}   {{ field_name }}: { type: {{ field_types|safe }} },{%
   else
-%}   {{ field_name }}: { type: GraphQLList({{ field_types|safe }}) },{% endif %}{#  // {{ field_description }}#}
+%}   {{ field_name }}: { type: GraphQLList({{ field_types|safe }}) },{% endif %}
 {% endfor %}
   })
 });
 {% endfor %}
 /* union type for input types definition */
-{% for input_type, input_deps in input_types %}
+{% for input_type, input_deps in input_types.items() %}
 const {{ input_type }}Input = UnionInputType({
   name: '{{ input_type }}Input',
   inputTypes: [
@@ -42,7 +46,7 @@ const {{ input_type }}Input = UnionInputType({
 const AnyInput = UnionInputType({
   name: 'AnyInput',
   inputTypes: [
-    {% for input_type, fields in type_defs %}{{ input_type }}Input, 
+    {% for input_type, fields in type_defs.items() %}{{ input_type }}Input, 
     {% endfor %}
   ],
   resolveType(name) {
@@ -59,7 +63,7 @@ resolvers = { AnyInput };
 /* typeDefs */
 const typeDefs = `
 scalar AnyInput
-{% for input_type, fields in type_defs %}scalar {{ input_type }}Input
+{% for input_type, fields in type_defs.items() %}scalar {{ input_type }}Input
 {% endfor %}
 `;
 
@@ -67,6 +71,6 @@ schema = makeExecutableSchema({ typeDefs, resolvers });
 
 module.exports = { 
   AnyInput,
-{% for typename, fields in type_defs %}  {{ typename }}Input,
+{% for typename, fields in type_defs.items() %}  {{ typename }}Input,
 {% endfor %}
 };

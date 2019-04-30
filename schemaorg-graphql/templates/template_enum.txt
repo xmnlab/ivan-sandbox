@@ -1,0 +1,18 @@
+const { GraphQLEnumType } = require('graphql');
+
+{% for enum_name, enum_def in enum_defs.items() %} 
+const {{ enum_def['rdfs:label'] }}Enum = new GraphQLEnumType({
+  name: '{{ enum_def['rdfs:label'] }}Enum',
+  values: {
+    {% for value in enum_def['__values']
+    %}{{ value['rdfs:label'] }}: {
+      value: {{ loop.index }},
+    },
+    {% endfor %}
+  },
+});
+{% endfor %} 
+module.exports = { 
+{% for enum_name, enum_def in enum_defs.items() %}  {{ enum_def['rdfs:label'] }}Enum, 
+{% endfor %}
+};
