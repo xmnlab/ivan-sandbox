@@ -8,4 +8,5 @@ sudo apt-get install -y --no-install-recommends \
   vim \
   ca-certificates \
   libjpeg-dev \
-  libpng-dev
+  libpng-dev \
+  gdb

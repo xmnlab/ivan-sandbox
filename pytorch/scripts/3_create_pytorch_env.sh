@@ -1,8 +1,8 @@
 #!/bin/bash
 
-set -ex
+# set -ex
 
-conda create -n pytorch-xmn -y
+conda create -n pytorch-xmn -y python=3.6
 
 source activate pytorch-xmn
 
