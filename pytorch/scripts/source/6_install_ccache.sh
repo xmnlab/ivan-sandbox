@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# it needs some investigation to use ccache from conda-forge
 
 # install ccache
 sudo apt install ccache
