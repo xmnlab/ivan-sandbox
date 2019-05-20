@@ -9,19 +9,21 @@ from pytorch_dev_tools.nn_th2at4gpu import NN_TH2AT_CUDA
 
 @click.command()
 @click.option(
-    '--th_files',
+    '--th_file',
     '-f',
     multiple=True,
     required=True,
-    help='TH files that will be ported'
+    help='TH file that will be ported'
 )
 @click.option(
     '--output_path',
+    '-o',
     required=True,
     help='Output path for the new ATen files'
 )
 @click.option(
     '--pytorch_path',
+    '-p',
     required=True,
     help='PyTorch path'
 )
@@ -40,12 +42,13 @@ from pytorch_dev_tools.nn_th2at4gpu import NN_TH2AT_CUDA
     help='Run porting for CUDA'
 )
 @click.option(
-    '--file_extra_rules', 
+    '--file_extra_rules',
+    '-r',
     default=None, 
     help='The path of the file that add extra rules'
 )
 def run(
-    th_files,
+    th_file,
     output_path,
     pytorch_path,
     cpu,
@@ -98,16 +101,18 @@ def run(
     kwargs = {
         'output_path': output_path, 
         'pytorch_path': pytorch_path,
-        'th_files': list(th_files),
+        'th_files': list(th_file),
         'rules_extra': rules_extra,
         'rules_name_extra': []  # not implemented yet
     }
 
     if cpu:
-        _th2at = NN_TH2AT_CPU(**kwargs)
+        print('[II] CPU mode recognized')
+        th2at = NN_TH2AT_CPU(**kwargs)
     else:
-        _th2at = NN_TH2AT_CUDA(**kwargs)
-    _th2at.store_files()
+        print('[II] GPU mode recognized')
+        th2at = NN_TH2AT_CUDA(**kwargs)
+    th2at.store_files()
 
 
 if __name__ == '__main__':

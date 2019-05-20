@@ -195,19 +195,24 @@ class NN_TH2AT:
             # get file data from TH[CU]NN
             path_src = os.path.join(self.th_path, 'generic', th_fn)
             at_file_output_path = os.path.join(self.output_path, at_fn)
+            # create an empty ouput file or clean an existent file
+            os.makedirs(self.output_path, exist_ok=True)
+            empty_file = True
+            with open(at_file_output_path, 'w') as f:
+                f.write('')
             # copy also properties and metadata
             if os.path.isfile(path_src):
+                empty_file = False
                 shutil.copy2(path_src, at_file_output_path)
-            else:
-                # if source is not available create an empty file
-                with open(at_file_output_path, 'w') as f:
-                    f.write('')
             
             with open(at_file_output_path, 'a') as f_dst:
                 # get file data from TH[CU]NN/generic
                 f_dst.write('\n')
                 path_src = os.path.join(self.th_path, 'generic', th_fn) 
                 if not os.path.isfile(path_src):
+                    print('[EE] {} not found.'.format(path_src))
+                    if empty_file:
+                        os.remove(at_file_output_path)
                     continue
                 with open(path_src, 'r') as f_src:
                     f_dst.write('\n// ' + self.th_dirname +  '/generic\n')
@@ -253,6 +258,10 @@ class NN_TH2AT:
         ]
         
         for f_path in at_files_path:
+            if not os.path.isfile(f_path):
+                print('[EE] {} was not generated.'.format(f_path))
+                continue
+
             with open(f_path, 'r') as f:
                 f_content = self.th2at(f.read())
 
