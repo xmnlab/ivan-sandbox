@@ -5,6 +5,4 @@ source "${current_dir}/source/4a_startup_pytorch_conda_env.sh"
 source "${current_dir}/source/4b_startup_pytorch.sh"
 alias nvcc='nvcc --resorce-usage'
 export DEBUG=1
-export CUDA_DEVICE_DEBUG=1
-export NO_CUDA=0
-export USE_CUDA=1
+unset NO_CUDA
