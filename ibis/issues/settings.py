@@ -249,3 +249,5 @@ def post_connection_spark(con):
     )
     df_udf_random.createOrReplaceTempView('udf_random')
     return con
+
+post_connection_pyspark = post_connection_spark
