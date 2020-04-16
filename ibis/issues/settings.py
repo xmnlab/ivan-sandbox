@@ -27,6 +27,13 @@ conf['omniscidb'] = dict(
     database='ibis_testing'
 )
 
+"""
+dict(
+    host='metis.omnisci.com', user='demouser', password='HyperInteractive',
+    port=443, database='mapd', protocol='https'
+)
+"""
+
 # pandas
 conf['pandas'] = {
     'dictionary': {
