@@ -37,7 +37,7 @@ def salary_date():
                 for y, m, d in _date_generation(year_start, year_end)
             ],
             'salary': [
-                y * 10000000 + m * 1000 + d
+                float(y * 1000 + m * 10 + d)
                 for y, m, d in _date_generation(year_start, year_end)
             ],
             'date_of_birth': [
