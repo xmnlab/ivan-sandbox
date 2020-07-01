@@ -53,9 +53,9 @@ def salary_date():
                         str(m).rjust(2, '0'), 
                         str(m).rjust(2, '0'), 
                         str(m).rjust(2, '0'), 
-                        str(m).rjust(2, '0'), 
-                        str(m).rjust(2, '0'), 
-                        str(d).rjust(2, '0'), 
+                        str(m).rjust(3, '0'), 
+                        str(m).rjust(3, '0'), 
+                        str(d).rjust(3, '0'), 
                     )
                 )
                 for y, m, d in _date_generation(year_start, year_end)
